@@ -10,8 +10,8 @@ MomentAPI
       "UserId": "user1",		// 发布者id
       "Type": 0,				// 朋友圈类型，纯文字、视频、分享
       "Text": "it is rainy",	// 文字内容
-      "OtherData": "",		  // 除了文字外的内容，这里统一用字符串表示
-      "Source": "",			 // 朋友圈来源
+      "OtherData": "",		    // 除了文字外的内容，这里统一用字符串表示
+      "Source": "",			    // 朋友圈来源
 }
 ```
 返回数据格式：（下面其他post方法返回格式也是如下）
@@ -60,9 +60,9 @@ MomentId=560c00f3e6e90f121f000001&UserId=user1
 ```
 {
       "MomentId": "560bfc56e6e90f5178000001",	// 朋友圈id
-      "FromUserId": "user1",					 // 发布者id
+      "FromUserId": "user1",					// 发布者id
       "ToUserId": "",							// 回复对象id，空表示没有回复对象
-      "Text": "yeah,cold",					   // 回复内容
+      "Text": "yeah,cold",					    // 回复内容
 }
 ```
 - `GET` 通过朋友圈id和用户id获取的评论，用户id用来剔除非好友的评论，参数：
@@ -99,7 +99,7 @@ CommentId=560c0ce0e6e90f6001000002&UserId=user2
 ```
 {
       "MomentId": "560bfc56e6e90f5178000001",	// 朋友圈id
-      "UserId": "user2",						 // 发布者id
+      "UserId": "user2",						// 发布者id
 }
 ```
 - `GET` 通过朋友圈id和用户id获取赞，用户id用来剔除非好友的赞，参数：

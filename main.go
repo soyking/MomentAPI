@@ -1,16 +1,29 @@
 package main
 
 import (
-	_ "MomentAPI/docs"
-	_ "MomentAPI/routers"
-
 	"github.com/astaxie/beego"
+	"github.com/soyking/MomentAPI/controllers"
 )
 
 func main() {
-	if beego.RunMode == "dev" {
-		beego.DirectoryIndex = true
-		beego.StaticDir["/swagger"] = "swagger"
-	}
+	// user relation operations
+	beego.Router("/block", &controllers.BlockController{})
+	beego.Router("/block/cancel", &controllers.BlockCancelController{})
+	beego.Router("/unshare", &controllers.UnshareController{})
+	beego.Router("/unshare/cancel", &controllers.UnshareCancelController{})
+
+	// moment operations
+	beego.Router("/moment", &controllers.MomentController{})
+	beego.Router("/moment/delete", &controllers.MomentDeleteController{})
+	beego.Router("/moment/pull", &controllers.MomentPullController{})
+
+	// like operations
+	beego.Router("/like", &controllers.LikeController{})
+	beego.Router("/like/cancel", &controllers.LikeCancelController{})
+
+	// comment operations
+	beego.Router("/comment", &controllers.CommentController{})
+	beego.Router("/comment/delete", &controllers.CommentDeleteController{})
+
 	beego.Run()
 }

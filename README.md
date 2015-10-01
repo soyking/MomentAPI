@@ -1,5 +1,11 @@
 MomentAPI
 =========
+## 运行 ##
+```
+go get github.com/soyking/MomentAPI
+```
+数据库：MomentAPI.mongo
+
 
 ## 朋友圈操作 ##
 

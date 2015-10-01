@@ -29,8 +29,10 @@ func init() {
 
 func SaveComment(c Comment) (err error) {
 	// assert the moment exists
-	n, err := moment_c.Find(bson.M{"_id": bson.ObjectIdHex(c.MomentId)}).Count()
-	if n == 0 {
+	exist, err := MomentExist(c.MomentId)
+	if err != nil {
+		return
+	} else if !exist {
 		err = errors.New("moment doesn't exist")
 		return
 	}
@@ -47,6 +49,7 @@ func GetComments(momentId string, userId string) (comments []Comment, err error)
 	if err != nil {
 		return
 	}
+
 	// including the situation of toUserId=="", assuming that fromUserId won't be ""
 	friends = append(friends, "")
 	err = comment_c.Find(bson.M{"MomentId": momentId, "FromUserId": bson.M{"$in": friends}, "ToUserId": bson.M{"$in": friends}}).Sort("Timestamp").All(&comments)

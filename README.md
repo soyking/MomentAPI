@@ -40,18 +40,28 @@ MomentAPI
 }
 ```
 
+/moment/pull
+- `GET` 通过用户id和时间戳拉取好友朋友圈，参数：
+```
+/moment/pull?UserId=user3&Timestamp=200
+```
+返回数据格式同上
+
 /moment/delete
 - `POST` 通过朋友圈id和用户id删除朋友圈，数据格式：
 ```
 MomentId=560c00f3e6e90f121f000001&UserId=user1
 ```
 
-/moment/pull
-- `GET` 通过用户id和时间戳拉取好友朋友圈，参数：
+/moment/exist
+- `POST` 通过朋友圈id查询是否存在，用于更新，参数：
 ```
-/moment/pull?UserId=user3&Timestamp=200
+/moment/exist?MomentId=560c8944e6e90f5631000003
 ```
-返回格式同上
+返回数据格式：
+```
+{Result:exist}	//不存在 not exist；错误 error
+```
 
 ## 评论操作 ##
 

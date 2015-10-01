@@ -16,6 +16,7 @@ func main() {
 	beego.Router("/moment", &controllers.MomentController{})
 	beego.Router("/moment/delete", &controllers.MomentDeleteController{})
 	beego.Router("/moment/pull", &controllers.MomentPullController{})
+	beego.Router("/moment/exist", &controllers.MomentExistController{})
 
 	// like operations
 	beego.Router("/like", &controllers.LikeController{})

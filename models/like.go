@@ -27,14 +27,16 @@ func init() {
 
 func SaveLike(l Like) (err error) {
 	// assert the moment exists
-	n, err := moment_c.Find(bson.M{"_id": bson.ObjectIdHex(l.MomentId)}).Count()
-	if n == 0 {
+	exist, err := MomentExist(l.MomentId)
+	if err != nil {
+		return
+	} else if !exist {
 		err = errors.New("moment doesn't exist")
 		return
 	}
 
 	//assert the like doesn't exist
-	n, _ = like_c.Find(bson.M{"MomentId": l.MomentId, "UserId": l.UserId}).Count()
+	n, _ := like_c.Find(bson.M{"MomentId": l.MomentId, "UserId": l.UserId}).Count()
 	if n != 0 {
 		err = errors.New("like exists")
 		return

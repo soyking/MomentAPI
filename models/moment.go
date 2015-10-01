@@ -51,19 +51,25 @@ func GetMomentsByTimestamp(userId string, timestamp int64) (moments []Moment, er
 	return moments, err
 }
 
-func DeleteMoment(MomentId string, userId string) (err error) {
-	err = moment_c.Remove(bson.M{"_id": bson.ObjectIdHex(MomentId), "UserId": userId})
+func DeleteMoment(momentId string, userId string) (err error) {
+	err = moment_c.Remove(bson.M{"_id": bson.ObjectIdHex(momentId), "UserId": userId})
 	if err != nil {
 		return
 	}
 
-	err = DeleteLikesByMomentId(MomentId)
+	err = DeleteLikesByMomentId(momentId)
 	if err != nil {
 		beego.Debug(err)
 		return
 	}
 
-	err = DeleteCommentsByMomentId(MomentId)
+	err = DeleteCommentsByMomentId(momentId)
 
+	return
+}
+
+func MomentExist(momentId string) (exist bool, err error) {
+	n, err := moment_c.Find(bson.M{"_id": bson.ObjectIdHex(momentId)}).Count()
+	exist = (n != 0)
 	return
 }

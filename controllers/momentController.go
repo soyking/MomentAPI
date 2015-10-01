@@ -99,3 +99,27 @@ func (m *MomentPullController) Get() {
 	m.Data["json"] = result
 	m.ServeJson()
 }
+
+type MomentExistController struct {
+	beego.Controller
+}
+
+func (m *MomentExistController) Get() {
+	momentId := m.GetString("MomentId")
+	if momentId != "" {
+		exist, err := models.MomentExist(momentId)
+		if err != nil {
+			beego.Debug(err)
+			m.Data["json"] = "{Result:error}"
+		} else {
+			if exist {
+				m.Data["json"] = "{Result:exist}"
+			} else {
+				m.Data["json"] = "{Result:not exist}"
+			}
+		}
+	} else {
+		m.Data["json"] = "{Result:error}"
+	}
+	m.ServeJson()
+}

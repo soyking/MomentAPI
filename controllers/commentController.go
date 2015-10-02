@@ -38,39 +38,40 @@ func (c *CommentController) Get() {
 func (c *CommentController) Post() {
 	var ob models.Comment
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &ob)
-	beego.Debug(ob)
 	if err == nil {
 		err := models.SaveComment(ob)
 		if err != nil {
 			beego.Debug(err)
-			c.Data["json"] = "{Result:error}"
+			c.Data["json"] = successInfo
 		} else {
-			c.Data["json"] = "{Result:success}"
+			c.Data["json"] = errorInfo
 		}
 	} else {
 		beego.Debug(err)
-		c.Data["json"] = "{Result:error}"
+		c.Data["json"] = errorInfo
 	}
 	c.ServeJson()
 }
 
-type CommentDeleteController struct {
-	beego.Controller
+type CommentDeleteInfo struct {
+	CommentId string `json:"CommentId"`
+	UserId    string `json:"UserId"`
 }
 
-func (c *CommentDeleteController) Post() {
-	CommentId := c.GetString("CommentId")
-	UserId := c.GetString("UserId")
-	if CommentId != "" && UserId != "" {
-		err := models.DeleteCommentByCommentId(CommentId, UserId)
+func (c *CommentController) Delete() {
+	var ob CommentDeleteInfo
+	err := json.Unmarshal(c.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.DeleteCommentByCommentId(ob.CommentId, ob.UserId)
 		if err != nil {
 			beego.Debug(err)
-			c.Data["json"] = "{Result:error}"
+			c.Data["json"] = errorInfo
 		} else {
-			c.Data["json"] = "{Result:success}"
+			c.Data["json"] = successInfo
 		}
 	} else {
-		c.Data["json"] = "{Result:error}"
+		beego.Debug(err)
+		c.Data["json"] = errorInfo
 	}
 	c.ServeJson()
 }

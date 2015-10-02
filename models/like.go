@@ -2,7 +2,7 @@ package models
 
 import (
 	"errors"
-	"github.com/astaxie/beego"
+	// "github.com/astaxie/beego"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"time"
@@ -59,7 +59,6 @@ func GetLikes(momentId string, userId string) (likes []Like, err error) {
 }
 
 func CancelLike(likeId string, userId string) (err error) {
-	beego.Debug(bson.ObjectIdHex(likeId))
 	err = like_c.Remove(bson.M{"_id": bson.ObjectIdHex(likeId), "UserId": userId})
 	return
 }

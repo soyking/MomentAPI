@@ -23,13 +23,13 @@ func (l *LikeController) Get() {
 		ob, err := models.GetLikes(momentId, userId)
 		if err != nil {
 			beego.Debug(err)
-			result.Result = "error"
+			result.Result = errorInfo
 		} else {
-			result.Result = "success"
+			result.Result = successInfo
 			result.Likes = ob
 		}
 	} else {
-		result.Result = "error"
+		result.Result = errorInfo
 	}
 	l.Data["json"] = result
 	l.ServeJson()
@@ -38,39 +38,40 @@ func (l *LikeController) Get() {
 func (l *LikeController) Post() {
 	var ob models.Like
 	err := json.Unmarshal(l.Ctx.Input.RequestBody, &ob)
-	beego.Debug(ob)
 	if err == nil {
 		err := models.SaveLike(ob)
 		if err != nil {
 			beego.Debug(err)
-			l.Data["json"] = "{Result:error}"
+			l.Data["json"] = errorInfo
 		} else {
-			l.Data["json"] = "{Result:success}"
+			l.Data["json"] = successInfo
 		}
 	} else {
 		beego.Debug(err)
-		l.Data["json"] = "{Result:error}"
+		l.Data["json"] = errorInfo
 	}
 	l.ServeJson()
 }
 
-type LikeCancelController struct {
-	beego.Controller
+type LikeDeleteInfo struct {
+	LikeId string `json:"LikeId"`
+	UserId string `json:"UserId"`
 }
 
-func (l *LikeCancelController) Post() {
-	likeId := l.GetString("LikeId")
-	userId := l.GetString("UserId")
-	if likeId != "" && userId != "" {
-		err := models.CancelLike(likeId, userId)
+func (l *LikeController) Delete() {
+	var ob LikeDeleteInfo
+	err := json.Unmarshal(l.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.CancelLike(ob.LikeId, ob.UserId)
 		if err != nil {
 			beego.Debug(err)
-			l.Data["json"] = "{Result:error}"
+			l.Data["json"] = errorInfo
 		} else {
-			l.Data["json"] = "{Result:success}"
+			l.Data["json"] = successInfo
 		}
 	} else {
-		l.Data["json"] = "{Result:error}"
+		beego.Debug(err)
+		l.Data["json"] = errorInfo
 	}
 	l.ServeJson()
 }

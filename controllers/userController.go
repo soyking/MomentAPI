@@ -1,40 +1,52 @@
 package controllers
 
 import (
+	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/soyking/MomentAPI/models"
 )
+
+type UserRelationInfo struct {
+	FollowId   string `json:"FollowId"`
+	FollowedId string `json:"FollowedId"`
+}
 
 type BlockController struct {
 	beego.Controller
 }
 
 func (b *BlockController) Post() {
-	followId := b.GetString("FollowId")
-	followedId := b.GetString("FollowedId")
-	err := models.BlockAction(followId, followedId, true)
-	if err != nil {
-		beego.Debug(err)
-		b.Data["json"] = "{Result:error}"
+	var ob UserRelationInfo
+	err := json.Unmarshal(b.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.BlockAction(ob.FollowId, ob.FollowedId, true)
+		if err != nil {
+			beego.Debug(err)
+			b.Data["json"] = errorInfo
+		} else {
+			b.Data["json"] = successInfo
+		}
 	} else {
-		b.Data["json"] = "{Result:success}"
+		beego.Debug(err)
+		b.Data["json"] = errorInfo
 	}
 	b.ServeJson()
 }
 
-type BlockCancelController struct {
-	beego.Controller
-}
-
-func (b *BlockCancelController) Post() {
-	followId := b.GetString("FollowId")
-	followedId := b.GetString("FollowedId")
-	err := models.BlockAction(followId, followedId, false)
-	if err != nil {
-		beego.Debug(err)
-		b.Data["json"] = "{Result:error}"
+func (b *BlockController) Delete() {
+	var ob UserRelationInfo
+	err := json.Unmarshal(b.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.BlockAction(ob.FollowId, ob.FollowedId, false)
+		if err != nil {
+			beego.Debug(err)
+			b.Data["json"] = errorInfo
+		} else {
+			b.Data["json"] = successInfo
+		}
 	} else {
-		b.Data["json"] = "{Result:success}"
+		beego.Debug(err)
+		b.Data["json"] = errorInfo
 	}
 	b.ServeJson()
 }
@@ -44,31 +56,37 @@ type UnshareController struct {
 }
 
 func (u *UnshareController) Post() {
-	followId := u.GetString("FollowId")
-	followedId := u.GetString("FollowedId")
-	err := models.UnshareAction(followId, followedId, true)
-	if err != nil {
-		beego.Debug(err)
-		u.Data["json"] = "{Result:error}"
+	var ob UserRelationInfo
+	err := json.Unmarshal(u.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.UnshareAction(ob.FollowId, ob.FollowedId, true)
+		if err != nil {
+			beego.Debug(err)
+			u.Data["json"] = errorInfo
+		} else {
+			u.Data["json"] = successInfo
+		}
 	} else {
-		u.Data["json"] = "{Result:success}"
+		beego.Debug(err)
+		u.Data["json"] = errorInfo
 	}
 	u.ServeJson()
 }
 
-type UnshareCancelController struct {
-	beego.Controller
-}
-
-func (u *UnshareCancelController) Post() {
-	followId := u.GetString("FollowId")
-	followedId := u.GetString("FollowedId")
-	err := models.UnshareAction(followId, followedId, false)
-	if err != nil {
-		beego.Debug(err)
-		u.Data["json"] = "{Result:error}"
+func (u *UnshareController) Delete() {
+	var ob UserRelationInfo
+	err := json.Unmarshal(u.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.UnshareAction(ob.FollowId, ob.FollowedId, false)
+		if err != nil {
+			beego.Debug(err)
+			u.Data["json"] = errorInfo
+		} else {
+			u.Data["json"] = successInfo
+		}
 	} else {
-		u.Data["json"] = "{Result:success}"
+		beego.Debug(err)
+		u.Data["json"] = errorInfo
 	}
 	u.ServeJson()
 }

@@ -30,7 +30,7 @@ func (m *MomentController) Get() {
 		}
 	} else {
 		beego.Debug(err)
-		result.Result = "error"
+		result.Result = err.Error()
 	}
 	m.Data["json"] = result
 	m.ServeJson()
@@ -43,34 +43,36 @@ func (m *MomentController) Post() {
 		err := models.SaveMoment(ob)
 		if err != nil {
 			beego.Debug(err)
-			m.Data["json"] = "{Result:error}"
+			m.Data["json"] = errorInfo
 		} else {
-			m.Data["json"] = "{Result:success}"
+			m.Data["json"] = successInfo
 		}
 	} else {
 		beego.Debug(err)
-		m.Data["json"] = "{Result:error}"
+		m.Data["json"] = errorInfo
 	}
 	m.ServeJson()
 }
 
-type MomentDeleteController struct {
-	beego.Controller
+type MomentDeleteInfo struct {
+	MomentId string `json:"MomentId"`
+	UserId   string `json:"UserId"`
 }
 
-func (m *MomentDeleteController) Post() {
-	momentId := m.GetString("MomentId")
-	userId := m.GetString("UserId")
-	if momentId != "" && userId != "" {
-		err := models.DeleteMoment(momentId, userId)
+func (m *MomentController) Delete() {
+	var ob MomentDeleteInfo
+	err := json.Unmarshal(m.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.DeleteMoment(ob.MomentId, ob.UserId)
 		if err != nil {
 			beego.Debug(err)
-			m.Data["json"] = "{Result:error}"
+			m.Data["json"] = errorInfo
 		} else {
-			m.Data["json"] = "{Result:success}"
+			m.Data["json"] = successInfo
 		}
 	} else {
-		m.Data["json"] = "{Result:error}"
+		beego.Debug(err)
+		m.Data["json"] = errorInfo
 	}
 	m.ServeJson()
 }
@@ -110,7 +112,7 @@ func (m *MomentExistController) Get() {
 		exist, err := models.MomentExist(momentId)
 		if err != nil {
 			beego.Debug(err)
-			m.Data["json"] = "{Result:error}"
+			m.Data["json"] = errorInfo
 		} else {
 			if exist {
 				m.Data["json"] = "{Result:exist}"
@@ -119,7 +121,7 @@ func (m *MomentExistController) Get() {
 			}
 		}
 	} else {
-		m.Data["json"] = "{Result:error}"
+		m.Data["json"] = errorInfo
 	}
 	m.ServeJson()
 }

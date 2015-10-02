@@ -1,7 +1,7 @@
 package models
 
 import (
-	"github.com/astaxie/beego"
+	// "github.com/astaxie/beego"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"time"
@@ -46,7 +46,6 @@ func GetMomentsByTimestamp(userId string, timestamp int64) (moments []Moment, er
 	if err != nil {
 		return
 	}
-	beego.Debug(friends)
 	err = moment_c.Find(bson.M{"UserId": bson.M{"$in": friends}, "Timestamp": bson.M{"$gt": timestamp}}).Sort("-Timestamp").All(&moments)
 	return moments, err
 }
@@ -59,7 +58,6 @@ func DeleteMoment(momentId string, userId string) (err error) {
 
 	err = DeleteLikesByMomentId(momentId)
 	if err != nil {
-		beego.Debug(err)
 		return
 	}
 

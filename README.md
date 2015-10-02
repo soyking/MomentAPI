@@ -140,7 +140,7 @@ go get github.com/soyking/MomentAPI
  ```
 {
       "MomentId": "560bfc56e6e90f5178000001",	// 朋友圈id
-      "UserId": "user2"         					// 发布者id
+      "UserId": "user2"         				// 发布者id
 }
 ```
 

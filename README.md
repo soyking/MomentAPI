@@ -11,6 +11,7 @@ go get github.com/soyking/MomentAPI
 
 /moment
 - `POST`
+
 >发布朋友圈，数据格式：
 ```
 {

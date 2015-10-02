@@ -26,7 +26,9 @@ go get github.com/soyking/MomentAPI
 ```
 {Result: success}	//失败为error
 ```
+
 - `GET`
+
 >获取用户id在指定时间戳之后的朋友圈，用来显示个人朋友圈主页，参数：
 ```
 /moment?UserId=user1&Timestamp=100

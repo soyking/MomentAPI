@@ -19,7 +19,7 @@ go get github.com/soyking/MomentAPI
       "Type": 0,				// 朋友圈类型，纯文字、视频、分享
       "Text": "it is rainy",	// 文字内容
       "OtherData": "",		    // 除了文字外的内容，这里统一用字符串表示
-      "Source": "",			    // 朋友圈来源
+      "Source": ""			    // 朋友圈来源
 }
 ```
  返回数据格式：（下面其他POST、DELETE方法返回格式也是如下）
@@ -94,7 +94,7 @@ go get github.com/soyking/MomentAPI
       "MomentId": "560bfc56e6e90f5178000001",	// 朋友圈id
       "FromUserId": "user1",					// 发布者id
       "ToUserId": "",							// 回复对象id，空表示没有回复对象
-      "Text": "yeah,cold",					    // 回复内容
+      "Text": "yeah,cold"					    // 回复内容
 }
 ```
 
@@ -140,7 +140,7 @@ go get github.com/soyking/MomentAPI
  ```
 {
       "MomentId": "560bfc56e6e90f5178000001",	// 朋友圈id
-      "UserId": "user2",						// 发布者id
+      "UserId": "user2"         					// 发布者id
 }
 ```
 

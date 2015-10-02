@@ -12,14 +12,14 @@ go get github.com/soyking/MomentAPI
 /moment
 - `POST`
 >发布朋友圈，数据格式：
-```
-{
-      "UserId": "user1",		// 发布者id
-      "Type": 0,				// 朋友圈类型，纯文字、视频、分享
-      "Text": "it is rainy",	// 文字内容
-      "OtherData": "",		    // 除了文字外的内容，这里统一用字符串表示
-      "Source": "",			    // 朋友圈来源
-}
+>```
+>{
+>      "UserId": "user1",		// 发布者id
+>      "Type": 0,				// 朋友圈类型，纯文字、视频、分享
+>      "Text": "it is rainy",	// 文字内容
+>      "OtherData": "",		    // 除了文字外的内容，这里统一用字符串表示
+>      "Source": "",			    // 朋友圈来源
+>}
 ```
 返回数据格式：（下面其他POST、DELETE方法返回格式也是如下）
 ```

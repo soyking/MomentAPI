@@ -72,7 +72,7 @@ go get github.com/soyking/MomentAPI
 
 /moment/exist
 
-- `POST`
+- `GET`
 
  >通过朋友圈id查询是否存在，用于更新，参数：
  ```

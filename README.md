@@ -50,7 +50,9 @@ go get github.com/soyking/MomentAPI
   ]
 }
 ```
+
 - `DELETE`
+
 >通过朋友圈id和用户id删除朋友圈，数据格式：
 ```
 {
@@ -61,6 +63,7 @@ go get github.com/soyking/MomentAPI
 
 /moment/pull
 - `GET`
+
 >通过用户id和时间戳拉取好友朋友圈，参数：
 ```
 /moment/pull?UserId=user3&Timestamp=200
@@ -68,7 +71,9 @@ go get github.com/soyking/MomentAPI
 返回数据格式同上
 
 /moment/exist
+
 - `POST`
+
 >通过朋友圈id查询是否存在，用于更新，参数：
 ```
 /moment/exist?MomentId=560c8944e6e90f5631000003
@@ -82,6 +87,7 @@ go get github.com/soyking/MomentAPI
 
 /comment
 - `POST`
+
 >发布评论，数据格式：
 ```
 {
@@ -91,7 +97,9 @@ go get github.com/soyking/MomentAPI
       "Text": "yeah,cold",					    // 回复内容
 }
 ```
+
 - `GET`
+
 >通过朋友圈id和用户id获取的评论，用户id用来剔除非好友的评论，参数：
 ```
 /comment?MomentId=560bfc56e6e90f5178000001&UserId=user3
@@ -112,7 +120,9 @@ go get github.com/soyking/MomentAPI
   ]
 }
 ```
+
 - `DELETE`
+
 >通过评论id和用户id删除评论，数据格式：
 ```
 {
@@ -125,6 +135,7 @@ go get github.com/soyking/MomentAPI
 
 /like
 - `POST`
+
 >点赞，数据格式：
 ```
 {
@@ -132,7 +143,9 @@ go get github.com/soyking/MomentAPI
       "UserId": "user2",						// 发布者id
 }
 ```
+
 - `GET`
+
 >通过朋友圈id和用户id获取赞，用户id用来剔除非好友的赞，参数：
 ```
 /like?MomentId=560bfc56e6e90f5178000001&UserId=user2
@@ -151,7 +164,9 @@ go get github.com/soyking/MomentAPI
   ]
 }
 ```
+
 - `DELETE`
+
 >通过赞id和用户id取消赞，数据格式:
 ```
 {
@@ -164,6 +179,7 @@ go get github.com/soyking/MomentAPI
 
 /block
 - `POST`
+
 >FollowId屏蔽FollowedId，数据格式：
 ```
 {
@@ -171,11 +187,16 @@ go get github.com/soyking/MomentAPI
     "FollowedId":"user2"
 }
 ```
+
 - `DELETE`
+
 > FollowId取消屏蔽FollowedId，数据格式同上
 
 /unshare
 - `POST`
+
 >FollowId不让FollowedId看自己朋友圈，数据格式同上
+
 - `DELETE`
+
 > FollowId取消不让FollowedId看自己朋友圈，数据格式同上

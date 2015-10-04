@@ -15,6 +15,13 @@ type LikeController struct {
 	beego.Controller
 }
 
+// @Title get
+// @Description get likes by MomentId and UserId
+// @Param	MomentId		query 	string	true		"The moment you want to query"
+// @Param	UserId		query 	string	true		"Your UserId"
+// @Success 200 {object} controllers.LikeResult
+// @Failure 200 {"Result": "error","Likes": null}
+// @router / [get]
 func (l *LikeController) Get() {
 	momentId := l.GetString("MomentId")
 	userId := l.GetString("UserId")
@@ -23,18 +30,24 @@ func (l *LikeController) Get() {
 		ob, err := models.GetLikes(momentId, userId)
 		if err != nil {
 			beego.Debug(err)
-			result.Result = errorInfo
+			result.Result = "error"
 		} else {
-			result.Result = successInfo
+			result.Result = "success"
 			result.Likes = ob
 		}
 	} else {
-		result.Result = errorInfo
+		result.Result = "error"
 	}
 	l.Data["json"] = result
 	l.ServeJson()
 }
 
+// @Title post
+// @Description like
+// @Param	body		body 	models.Like	true		"The like content"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [post]
 func (l *LikeController) Post() {
 	var ob models.Like
 	err := json.Unmarshal(l.Ctx.Input.RequestBody, &ob)
@@ -58,6 +71,12 @@ type LikeDeleteInfo struct {
 	UserId string `json:"UserId"`
 }
 
+// @Title cancel
+// @Description cancel the like
+// @Param	body		body 	controllers.LikeDeleteInfo	true		"The like you want to cancel"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [delete]
 func (l *LikeController) Delete() {
 	var ob LikeDeleteInfo
 	err := json.Unmarshal(l.Ctx.Input.RequestBody, &ob)

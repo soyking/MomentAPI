@@ -15,6 +15,13 @@ type CommentController struct {
 	beego.Controller
 }
 
+// @Title get
+// @Description get comments by MomentId and UserId
+// @Param	MomentId		query 	string	true		"The moment you want to query"
+// @Param	UserId		query 	string	true		"Your UserId"
+// @Success 200 {object} controllers.CommentResult
+// @Failure 200 {"Result": "error","Comments": null}
+// @router / [get]
 func (c *CommentController) Get() {
 	momentId := c.GetString("MomentId")
 	userId := c.GetString("UserId")
@@ -35,6 +42,12 @@ func (c *CommentController) Get() {
 	c.ServeJson()
 }
 
+// @Title publish
+// @Description publish comment
+// @Param	body		body 	models.Comment	true		"The comment content"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [post]
 func (c *CommentController) Post() {
 	var ob models.Comment
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &ob)
@@ -42,9 +55,9 @@ func (c *CommentController) Post() {
 		err := models.SaveComment(ob)
 		if err != nil {
 			beego.Debug(err)
-			c.Data["json"] = successInfo
-		} else {
 			c.Data["json"] = errorInfo
+		} else {
+			c.Data["json"] = successInfo
 		}
 	} else {
 		beego.Debug(err)
@@ -58,6 +71,12 @@ type CommentDeleteInfo struct {
 	UserId    string `json:"UserId"`
 }
 
+// @Title delete
+// @Description delete the comment
+// @Param	body		body 	controllers.CommentDeleteInfo	true		"The comment you want to delete"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [delete]
 func (c *CommentController) Delete() {
 	var ob CommentDeleteInfo
 	err := json.Unmarshal(c.Ctx.Input.RequestBody, &ob)

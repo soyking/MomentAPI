@@ -15,6 +15,13 @@ type MomentController struct {
 	beego.Controller
 }
 
+// @Title get
+// @Description get one's moments by UserId and Timestamp
+// @Param	UserId		query 	string	true		"Your UserId"
+// @Param	Timestamp		query 	string	true		"Last query time"
+// @Success 200 {object} controllers.MomentResult
+// @Failure 200 {"Result": "error","Moments": null}
+// @router / [get]
 func (m *MomentController) Get() {
 	userId := m.GetString("UserId")
 	timestamp, err := m.GetInt64("Timestamp")
@@ -30,12 +37,18 @@ func (m *MomentController) Get() {
 		}
 	} else {
 		beego.Debug(err)
-		result.Result = err.Error()
+		result.Result = "error"
 	}
 	m.Data["json"] = result
 	m.ServeJson()
 }
 
+// @Title publish
+// @Description publish moment
+// @Param	body		body 	models.Moment	true		"The moment content"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [post]
 func (m *MomentController) Post() {
 	var ob models.Moment
 	err := json.Unmarshal(m.Ctx.Input.RequestBody, &ob)
@@ -59,8 +72,15 @@ type MomentDeleteInfo struct {
 	UserId   string `json:"UserId"`
 }
 
+// @Title delete
+// @Description delete the moment
+// @Param	body		body 	controllers.MomentDeleteInfo	true		"The moment you want to delete"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [delete]
 func (m *MomentController) Delete() {
 	var ob MomentDeleteInfo
+	beego.Debug(string(m.Ctx.Input.RequestBody))
 	err := json.Unmarshal(m.Ctx.Input.RequestBody, &ob)
 	if err == nil {
 		err := models.DeleteMoment(ob.MomentId, ob.UserId)
@@ -77,11 +97,14 @@ func (m *MomentController) Delete() {
 	m.ServeJson()
 }
 
-type MomentPullController struct {
-	beego.Controller
-}
-
-func (m *MomentPullController) Get() {
+// @Title pull
+// @Description pull moments by UserId and Timestamp
+// @Param	UserId		query 	string	true		"Your UserId"
+// @Param	Timestamp		query 	string	true		"Last query time"
+// @Success 200 {object} controllers.MomentResult
+// @Failure 200 {"Result": "error","Moments": null}
+// @router /pull [get]
+func (m *MomentController) Pull() {
 	userId := m.GetString("UserId")
 	timestamp, err := m.GetInt64("Timestamp")
 	result := MomentResult{}
@@ -102,11 +125,13 @@ func (m *MomentPullController) Get() {
 	m.ServeJson()
 }
 
-type MomentExistController struct {
-	beego.Controller
-}
-
-func (m *MomentExistController) Get() {
+// @Title exist
+// @Description find out the moment exist or not
+// @Param	MomentId		query 	string	true		"The moment you want to query"
+// @Success 200 {Result:(not)exist}
+// @Failure 200 {Result:error}
+// @router /exist [get]
+func (m *MomentController) Exist() {
 	momentId := m.GetString("MomentId")
 	if momentId != "" {
 		exist, err := models.MomentExist(momentId)

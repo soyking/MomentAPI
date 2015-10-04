@@ -3,6 +3,12 @@ MomentAPI
 ## 运行 ##
 ```
 go get github.com/soyking/MomentAPI
+cd $GOPATH/src/github.com/soyking/MomentAPI
+bee run -downdotrue -gendoc=true
+```
+访问：
+```
+http://127.0.0.1:8080/swagger/swagger-1/
 ```
 数据库：MomentAPI.mongo
 
@@ -56,7 +62,7 @@ go get github.com/soyking/MomentAPI
  >通过朋友圈id和用户id删除朋友圈，数据格式：
  ```
 {
-	"MomentId":"560c8ea3e6e90f0cc1000001"，
+	"MomentId":"560c8ea3e6e90f0cc1000001",
     "UserId":"user1"
 }
 ```
@@ -200,3 +206,7 @@ go get github.com/soyking/MomentAPI
 - `DELETE`
 
  >FollowId取消不让FollowedId看自己朋友圈，数据格式同上
+
+## TO FIX ##
+data format in swagger
+not found err

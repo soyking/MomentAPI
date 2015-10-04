@@ -15,6 +15,12 @@ type BlockController struct {
 	beego.Controller
 }
 
+// @Title block
+// @Description block someone
+// @Param	body		body 	models.UserRelation 	true		"FollowId block FollowedId"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [post]
 func (b *BlockController) Post() {
 	var ob UserRelationInfo
 	err := json.Unmarshal(b.Ctx.Input.RequestBody, &ob)
@@ -33,6 +39,12 @@ func (b *BlockController) Post() {
 	b.ServeJson()
 }
 
+// @Title unblock
+// @Description cancel block someone
+// @Param	body		body 	models.UserRelation 	true		"FollowId cancel block FollowedId"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [delete]
 func (b *BlockController) Delete() {
 	var ob UserRelationInfo
 	err := json.Unmarshal(b.Ctx.Input.RequestBody, &ob)
@@ -55,6 +67,12 @@ type UnshareController struct {
 	beego.Controller
 }
 
+// @Title unshare
+// @Description unshare with someone
+// @Param	body		body 	models.UserRelation 	true		"FollowId unshare with FollowedId"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [post]
 func (u *UnshareController) Post() {
 	var ob UserRelationInfo
 	err := json.Unmarshal(u.Ctx.Input.RequestBody, &ob)
@@ -73,6 +91,12 @@ func (u *UnshareController) Post() {
 	u.ServeJson()
 }
 
+// @Title share
+// @Description cancel unshare someone
+// @Param	body		body 	models.UserRelation 	true		"FollowId cancel unshare FollowedId"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [delete]
 func (u *UnshareController) Delete() {
 	var ob UserRelationInfo
 	err := json.Unmarshal(u.Ctx.Input.RequestBody, &ob)

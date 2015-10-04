@@ -4,7 +4,7 @@ MomentAPI
 ```
 go get github.com/soyking/MomentAPI
 cd $GOPATH/src/github.com/soyking/MomentAPI
-bee run -downdotrue -gendoc=true
+bee run -downdoc=true -gendoc=true
 ```
 访问：
 ```
@@ -12,6 +12,7 @@ http://127.0.0.1:8080/swagger/swagger-1/
 ```
 数据库：MomentAPI.mongo
 
+（**下面url省略前缀/v1**）
 
 ## 朋友圈操作 ##
 

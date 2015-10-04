@@ -78,7 +78,7 @@ http://127.0.0.1:8080/swagger/swagger-1/
 
 /moment/exist
 
-- `POST`
+- `GET`
 
  >通过朋友圈id查询是否存在，用于更新，参数：
  ```

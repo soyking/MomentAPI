@@ -1,8 +1,8 @@
 package models
 
 import (
-	// "github.com/astaxie/beego"
 	"errors"
+	"github.com/astaxie/beego"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"time"
@@ -20,11 +20,15 @@ type Comment struct {
 var comment_c *mgo.Collection
 
 func init() {
-	session, err := mgo.Dial(url)
-	if err != nil {
-		panic(err)
+	comment_c = GetMomentDb().C("Comment")
+	index := mgo.Index{
+		Key:    []string{"MomentId"},
+		Unique: true,
 	}
-	comment_c = session.DB(db).C("Comment")
+	err := comment_c.EnsureIndex(index)
+	if err != nil {
+		beego.Debug(err)
+	}
 }
 
 func SaveComment(c Comment) (err error) {

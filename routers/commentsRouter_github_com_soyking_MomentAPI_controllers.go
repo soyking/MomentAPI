@@ -64,16 +64,16 @@ func init() {
 
 	beego.GlobalControllerRouter["github.com/soyking/MomentAPI/controllers:MomentController"] = append(beego.GlobalControllerRouter["github.com/soyking/MomentAPI/controllers:MomentController"],
 		beego.ControllerComments{
-			"Get",
+			"Post",
 			`/`,
-			[]string{"get"},
+			[]string{"post"},
 			nil})
 
 	beego.GlobalControllerRouter["github.com/soyking/MomentAPI/controllers:MomentController"] = append(beego.GlobalControllerRouter["github.com/soyking/MomentAPI/controllers:MomentController"],
 		beego.ControllerComments{
-			"Post",
+			"Get",
 			`/`,
-			[]string{"post"},
+			[]string{"get"},
 			nil})
 
 	beego.GlobalControllerRouter["github.com/soyking/MomentAPI/controllers:MomentController"] = append(beego.GlobalControllerRouter["github.com/soyking/MomentAPI/controllers:MomentController"],

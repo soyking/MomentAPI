@@ -5,6 +5,7 @@ import (
 	_ "github.com/soyking/MomentAPI/routers"
 
 	"github.com/astaxie/beego"
+	"github.com/soyking/MomentAPI/models"
 )
 
 func main() {
@@ -12,5 +13,6 @@ func main() {
 		beego.DirectoryIndex = true
 		beego.StaticDir["/swagger"] = "swagger"
 	}
+	defer models.CloseSession()
 	beego.Run()
 }

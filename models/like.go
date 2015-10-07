@@ -2,7 +2,7 @@ package models
 
 import (
 	"errors"
-	// "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"time"
@@ -18,11 +18,14 @@ type Like struct {
 var like_c *mgo.Collection
 
 func init() {
-	session, err := mgo.Dial(url)
-	if err != nil {
-		panic(err)
+	like_c = GetMomentDb().C("Like")
+	index := mgo.Index{
+		Key: []string{"MomentId", "UserId"},
 	}
-	like_c = session.DB(db).C("Like")
+	err := like_c.EnsureIndex(index)
+	if err != nil {
+		beego.Debug(err)
+	}
 }
 
 func SaveLike(l Like) (err error) {

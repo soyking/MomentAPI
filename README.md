@@ -210,4 +210,3 @@ http://127.0.0.1:8080/swagger/swagger-1/
 
 ## TO FIX ##
 data format in swagger
-not found err

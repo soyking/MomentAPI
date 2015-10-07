@@ -15,6 +15,30 @@ type MomentController struct {
 	beego.Controller
 }
 
+// @Title publish
+// @Description publish moment
+// @Param	body		body 	models.Moment	true		"The moment content"
+// @Success 200 {Result:success}
+// @Failure 200 {Result:error}
+// @router / [post]
+func (m *MomentController) Post() {
+	var ob models.Moment
+	err := json.Unmarshal(m.Ctx.Input.RequestBody, &ob)
+	if err == nil {
+		err := models.SaveMoment(ob)
+		if err != nil {
+			beego.Debug(err)
+			m.Data["json"] = errorInfo
+		} else {
+			m.Data["json"] = successInfo
+		}
+	} else {
+		beego.Debug(err)
+		m.Data["json"] = errorInfo
+	}
+	m.ServeJson()
+}
+
 // @Title get
 // @Description get one's moments by UserId and Timestamp
 // @Param	UserId		query 	string	true		"Your UserId"
@@ -40,30 +64,6 @@ func (m *MomentController) Get() {
 		result.Result = "error"
 	}
 	m.Data["json"] = result
-	m.ServeJson()
-}
-
-// @Title publish
-// @Description publish moment
-// @Param	body		body 	models.Moment	true		"The moment content"
-// @Success 200 {Result:success}
-// @Failure 200 {Result:error}
-// @router / [post]
-func (m *MomentController) Post() {
-	var ob models.Moment
-	err := json.Unmarshal(m.Ctx.Input.RequestBody, &ob)
-	if err == nil {
-		err := models.SaveMoment(ob)
-		if err != nil {
-			beego.Debug(err)
-			m.Data["json"] = errorInfo
-		} else {
-			m.Data["json"] = successInfo
-		}
-	} else {
-		beego.Debug(err)
-		m.Data["json"] = errorInfo
-	}
 	m.ServeJson()
 }
 

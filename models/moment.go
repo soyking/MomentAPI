@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 	"time"
@@ -22,11 +22,14 @@ type Moment struct {
 var moment_c *mgo.Collection
 
 func init() {
-	session, err := mgo.Dial(url)
-	if err != nil {
-		panic(err)
+	moment_c = GetMomentDb().C("Moment")
+	index := mgo.Index{
+		Key: []string{"UserId", "Timestamp"},
 	}
-	moment_c = session.DB(db).C("Moment")
+	err := moment_c.EnsureIndex(index)
+	if err != nil {
+		beego.Debug(err)
+	}
 }
 
 func SaveMoment(m Moment) (err error) {

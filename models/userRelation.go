@@ -1,7 +1,7 @@
 package models
 
 import (
-	// "github.com/astaxie/beego"
+	"github.com/astaxie/beego"
 	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -16,11 +16,14 @@ type UserRelation struct {
 var user_c *mgo.Collection
 
 func init() {
-	session, err := mgo.Dial(url)
-	if err != nil {
-		panic(err)
+	user_c = GetMomentDb().C("UserRelation")
+	index := mgo.Index{
+		Key: []string{"FollowId"},
 	}
-	user_c = session.DB(db).C("UserRelation")
+	err := user_c.EnsureIndex(index)
+	if err != nil {
+		beego.Debug(err)
+	}
 }
 
 func GetRealFriends(userId string) (friends []string, err error) {
